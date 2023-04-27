@@ -1,14 +1,14 @@
-import { HeaderContainer, HeaderContent, NewTransactionButton } from "./styles";
+import * as S from "./styles";
 
 import logo from "../../assets/logo.svg";
 
 export function Header() {
   return (
-    <HeaderContainer>
-      <HeaderContent>
+    <S.HeaderContainer>
+      <S.HeaderContent>
         <img src={logo} alt="" />
-        <NewTransactionButton>New transaction</NewTransactionButton>
-      </HeaderContent>
-    </HeaderContainer>
+        <S.NewTransactionButton>New transaction</S.NewTransactionButton>
+      </S.HeaderContent>
+    </S.HeaderContainer>
   );
 }
