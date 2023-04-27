@@ -7,7 +7,7 @@ export function Summary() {
     <S.SummaryContainer>
       <S.SummaryCard>
         <header>
-          <span>In</span>
+          <span>Income</span>
           <ArrowCircleUp size={32} color="#00b37e" />
         </header>
 
@@ -18,7 +18,7 @@ export function Summary() {
 
       <S.SummaryCard>
         <header>
-          <span>Out</span>
+          <span>Outcome</span>
           <ArrowCircleDown size={32} color="#f75a68" />
         </header>
 
