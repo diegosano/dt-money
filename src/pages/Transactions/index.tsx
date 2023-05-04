@@ -1,10 +1,28 @@
+import { useEffect, useState } from 'react';
 import { Header } from '../../components/Header';
 import { SearchForm } from '../../components/SearchForm';
 import { Summary } from '../../components/Summary';
 
 import * as S from './styles';
 
+interface Transaction {
+  id: number;
+  description: string;
+  type: 'income' | 'outcome';
+  price: number;
+  category: string;
+  createdAt: string;
+}
+
 export function Transactions() {
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+
+  useEffect(() => {
+    fetch('http://localhost:3333/api/transactions')
+      .then(response => response.json())
+      .then(data => setTransactions(data))
+  }, [])
+
   return (
     <div>
       <Header />
@@ -15,49 +33,18 @@ export function Transactions() {
 
         <S.TransactionsTable>
           <tbody>
-            <tr>
-              <td width="50%">Desenvolvimento de site</td>
+            {transactions.map(transaction => (
+            <tr key={transaction.id}>
+              <td width="50%">{transaction.description}</td>
               <td>
-                <S.PriceHighlight variant="income">
-                  R$ 12.000,00
+                <S.PriceHighlight variant={transaction.type}>
+                  {transaction.price}
                 </S.PriceHighlight>
               </td>
-              <td>Venda</td>
-              <td>13/04/2022</td>
+              <td>{transaction.category}</td>
+              <td>{transaction.createdAt}</td>
             </tr>
-
-            <tr>
-              <td width="50%">Desenvolvimento de site</td>
-              <td>
-                <S.PriceHighlight variant="income">
-                  R$ 12.000,00
-                </S.PriceHighlight>
-              </td>
-              <td>Venda</td>
-              <td>13/04/2022</td>
-            </tr>
-
-            <tr>
-              <td width="50%">Desenvolvimento de site</td>
-              <td>
-                <S.PriceHighlight variant="outcome">
-                  - R$ 12.000,00
-                </S.PriceHighlight>
-              </td>
-              <td>Venda</td>
-              <td>13/04/2022</td>
-            </tr>
-
-            <tr>
-              <td width="50%">Desenvolvimento de site</td>
-              <td>
-                <S.PriceHighlight variant="income">
-                  R$ 12.000,00
-                </S.PriceHighlight>
-              </td>
-              <td>Venda</td>
-              <td>13/04/2022</td>
-            </tr>
+            ))}
           </tbody>
         </S.TransactionsTable>
       </S.TransactionsContainer>
