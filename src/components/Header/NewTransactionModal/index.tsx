@@ -1,24 +1,28 @@
-import * as Dialog from '@radix-ui/react-dialog';
-import * as z from 'zod';
-import { ArrowCircleUp, ArrowCircleDown, X } from 'phosphor-react';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Controller, useForm } from 'react-hook-form';
+import * as Dialog from "@radix-ui/react-dialog";
+import * as z from "zod";
+import { ArrowCircleUp, ArrowCircleDown, X } from "phosphor-react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Controller, useForm } from "react-hook-form";
+import { useContextSelector } from "use-context-selector";
 
-import { useTransactions } from '../../../hooks/useTransactions';
+import { TransactionsContext } from "../../../contexts/TransactionsContext";
 
-import * as S from './styles';
+import * as S from "./styles";
 
 const newTransactionModalSchema = z.object({
   description: z.string(),
   price: z.number(),
   category: z.string(),
-  type: z.enum(['income', 'outcome']),
+  type: z.enum(["income", "outcome"]),
 });
 
 type NewTransactionFormInputs = z.infer<typeof newTransactionModalSchema>;
 
 export function NewTransactionModal() {
-  const { createTransaction } = useTransactions();
+  const createTransaction = useContextSelector(
+    TransactionsContext,
+    (context) => context.createTransaction
+  );
   const {
     control,
     register,
@@ -28,7 +32,7 @@ export function NewTransactionModal() {
   } = useForm<NewTransactionFormInputs>({
     resolver: zodResolver(newTransactionModalSchema),
     defaultValues: {
-      type: 'income',
+      type: "income",
     },
   });
 
@@ -61,19 +65,19 @@ export function NewTransactionModal() {
             <input
               type="text"
               placeholder="Description"
-              {...register('description')}
+              {...register("description")}
               required
             />
             <input
               type="text"
               placeholder="Price"
-              {...register('price', { valueAsNumber: true })}
+              {...register("price", { valueAsNumber: true })}
               required
             />
             <input
               type="text"
               placeholder="Category"
-              {...register('category')}
+              {...register("category")}
               required
             />
 
