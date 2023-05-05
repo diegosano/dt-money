@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState, useCallback } from 'react';
 import type { ReactNode } from 'react';
+import { api } from '../lib/axios';
 
 interface Transaction {
   id: number;
@@ -25,16 +26,13 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
 
   const fetchTransactions = useCallback(async (query?: string) => {
-    const url = new URL('http://localhost:3333/api/transactions');
+    const response = await api.get('/transactions', {
+      params: {
+        q: query,
+      },
+    });
 
-    if (query) {
-      url.searchParams.append('q', query);
-    }
-
-    const response = await fetch(url);
-    const data = await response.json();
-
-    setTransactions(data);
+    setTransactions(response.data);
   }, []);
 
   useEffect(() => {
