@@ -1,10 +1,10 @@
-import { Header } from '../../components/Header';
-import { SearchForm } from '../../components/SearchForm';
-import { Summary } from '../../components/Summary';
-import * as S from './styles';
+import { Header } from "../../components/Header";
+import { SearchForm } from "../../components/SearchForm";
+import { Summary } from "../../components/Summary";
+import * as S from "./styles";
 
-import { useTransactions } from '../../hooks/useTransactions';
-import { dateFormatter, priceFormatter } from '../../utils/formatter';
+import { useTransactions } from "../../hooks/useTransactions";
+import { dateFormatter, priceFormatter } from "../../utils/formatter";
 
 export function Transactions() {
   const { transactions } = useTransactions();
@@ -24,7 +24,7 @@ export function Transactions() {
                 <td width="50%">{transaction.description}</td>
                 <td>
                   <S.PriceHighlight variant={transaction.type}>
-                    {transaction.type === 'outcome' && '- '}
+                    {transaction.type === "outcome" && "- "}
                     {priceFormatter.format(transaction.price)}
                   </S.PriceHighlight>
                 </td>
